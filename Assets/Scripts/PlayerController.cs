@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float horizontalSpeed = 3f;
     [SerializeField] private float verticalSpeed = 0.7f;
     [SerializeField] private float descendingMultiplier = 1.4f;
+    [SerializeField] private float timeCorrectionFactor = 250f;
 
     private Rigidbody2D _rb;
     private float initialRotation;
@@ -31,7 +32,7 @@ public class PlayerController : MonoBehaviour
     private void RotatePlayer()
     {
         //rotate
-        _rb.AddTorque( -myInputs.Horizontal * rotationSpeed);
+        _rb.AddTorque( -myInputs.Horizontal * rotationSpeed *Time.deltaTime*timeCorrectionFactor);
 
         //Stabilize
         float rotationZ = From360To180(transform.eulerAngles.z);
@@ -39,7 +40,7 @@ public class PlayerController : MonoBehaviour
         if (Mathf.Abs(stabilizationMultiplier) > minRotationtoStabilize)
         { 
             stabilizationMultiplier = (stabilizationMultiplier - minRotationtoStabilize) / (1-minRotationtoStabilize);//change the range from minRotationtoStabilize >> 1 to 0 >> 1
-            _rb.AddTorque(stabilizationMultiplier * stabilizationSpeed);
+            _rb.AddTorque(stabilizationMultiplier * stabilizationSpeed * Time.deltaTime * timeCorrectionFactor);
         }
 
         //Fix max rotation Hang
@@ -68,7 +69,7 @@ public class PlayerController : MonoBehaviour
             verticalMovement *= descendingMultiplier;
         }
 
-        _rb.AddForce(new Vector2(horizontalMovement, verticalMovement));
+        _rb.AddForce(new Vector2(horizontalMovement, verticalMovement) * Time.deltaTime * timeCorrectionFactor);
     }
 
     private float From360To180(float rotation)

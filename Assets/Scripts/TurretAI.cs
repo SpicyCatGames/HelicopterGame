@@ -9,7 +9,7 @@ public class TurretAI : MonoBehaviour
     [SerializeField][Range(0, 10)] private float firingRadius = 5;
     [SerializeField] private Vector2 rotationMin;
     [SerializeField] private Vector2 rotationMax;
-    [SerializeField] private float rotationSpeed;
+    [SerializeField] private float rotationSpeed = 11f;
     [SerializeField] private GameObject rounds;
     [SerializeField] private Transform firePoint;
     [SerializeField] private float firingRotationOffset;
