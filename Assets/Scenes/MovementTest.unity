@@ -253,6 +253,7 @@ MonoBehaviour:
   firingRadius: 7
   rotationMin: {x: -3.91, y: 4}
   rotationMax: {x: -4.44, y: 0}
+  rotationSpeed: 11
   rounds: {fileID: 2481690899900892295, guid: 89aecd06114433e498b4ab92bf4a4d42, type: 3}
   firePoint: {fileID: 150581396}
   firingRotationOffset: 3.2

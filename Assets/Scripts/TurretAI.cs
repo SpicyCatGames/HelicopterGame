@@ -9,6 +9,7 @@ public class TurretAI : MonoBehaviour
     [SerializeField][Range(0, 10)] private float firingRadius = 5;
     [SerializeField] private Vector2 rotationMin;
     [SerializeField] private Vector2 rotationMax;
+    [SerializeField] private float rotationSpeed;
     [SerializeField] private GameObject rounds;
     [SerializeField] private Transform firePoint;
     [SerializeField] private float firingRotationOffset;
@@ -39,7 +40,17 @@ public class TurretAI : MonoBehaviour
             }
 
             _angle = _angle - 90f + rotationOffset;
-            transform.rotation = Quaternion.AngleAxis(_angle, Vector3.forward);
+            //transform.rotation = Quaternion.AngleAxis(_angle, Vector3.forward);
+            Quaternion rotationTemp = Quaternion.AngleAxis(_angle, Vector3.forward);
+            if (rotationTemp.eulerAngles.z > transform.rotation.eulerAngles.z)
+            {
+                transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z + (rotationSpeed * Time.deltaTime));
+            }
+            else if (rotationTemp.eulerAngles.z < transform.rotation.eulerAngles.z)
+            {
+                transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z - (rotationSpeed * Time.deltaTime));
+            }
+
         }
     }
     private void OnDrawGizmosSelected()
