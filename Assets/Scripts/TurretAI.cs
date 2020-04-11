@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class TurretAI : MonoBehaviour
 {
-    [SerializeField] private float rotationOffset;
+    [SerializeField] private float rotationOffset = -43.9f;
     [SerializeField] private Transform target = default;
     [SerializeField][Range(0, 10)] private float firingRadius = 5;
-    [SerializeField] private Vector2 rotationMin;
-    [SerializeField] private Vector2 rotationMax;
+    [SerializeField] private Vector2 rotationMin = default;
+    [SerializeField] private Vector2 rotationMax = default;
     [SerializeField] private float rotationSpeed = 11f;
-    [SerializeField] private GameObject rounds;
-    [SerializeField] private Transform firePoint;
-    [SerializeField] private float firingRotationOffset;
+    [SerializeField] private GameObject rounds = default;
+    [SerializeField] private Transform firePoint = default;
+    [SerializeField] private float firingRotationOffset = 3.2f;
     [SerializeField] private float fireDelay = 1f;
     private float fireDelayDefault;
     private void Start()

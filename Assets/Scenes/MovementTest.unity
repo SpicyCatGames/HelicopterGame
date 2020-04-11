@@ -1566,6 +1566,7 @@ MonoBehaviour:
   horizontalSpeed: 1.35
   verticalSpeed: 0.9
   descendingMultiplier: 1.4
+  timeCorrectionFactor: 230
 --- !u!50 &1636359932
 Rigidbody2D:
   serializedVersion: 4
