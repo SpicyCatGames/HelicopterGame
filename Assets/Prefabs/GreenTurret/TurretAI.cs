@@ -26,7 +26,7 @@ public class TurretAI : MonoBehaviour
         {
             Vector2 _direction = target.position - transform.position;
             float _angle = Mathf.Atan2(_direction.y, _direction.x) * Mathf.Rad2Deg;//goes from 180 to -180
-            if (_angle < 0)
+            if (_angle < 0)//change to 0 > 360
             {
                 _angle = 360f + _angle;
             }
