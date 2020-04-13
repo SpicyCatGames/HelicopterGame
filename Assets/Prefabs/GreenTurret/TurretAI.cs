@@ -24,6 +24,9 @@ public class TurretAI : MonoBehaviour
     [SerializeField] private float fireDelay = 2f;
     private float fireDelayTemp;
     [SerializeField][Range(0, 359)] private float firingAngleOffset = 0;
+    [Header("Opposite Lock Fix")]
+    [SerializeField] private bool Fix1 = false;
+    [SerializeField] private bool Fix2 = false;
 
     private void Update()
     {
@@ -52,12 +55,12 @@ public class TurretAI : MonoBehaviour
         if (!targetOnCorrectSide()) return 0;
 
         if (currentRotation <= 180 && targetRotation > 180) {
-            targetRotation = From360to180(targetRotation);
+            if(!Fix1)targetRotation = From360to180(targetRotation);
             minRotation = From360to180(minRotation);
         }
         else if (targetRotation <= 180 && currentRotation > 180)
         {
-            currentRotation = From360to180(currentRotation);
+            if(!Fix2)currentRotation = From360to180(currentRotation);
             maxRotation = From360to180(maxRotation);
         }
         //the first lines of these two if statements are to avoid snapping at the edges because of rotations going beyond zero or 359
