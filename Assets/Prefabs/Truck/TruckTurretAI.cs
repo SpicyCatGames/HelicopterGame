@@ -59,7 +59,7 @@ public class TruckTurretAI : MonoBehaviour
     private void Fire()
     {
         RaycastHit2D lockedTarget =  Physics2D.Raycast(firePoint.position, transform.TransformPoint(_directionOfFire) - firePoint.position, firingRadius);
-        Debug.Log(lockedTarget.transform != null);
+        //Debug.Log(lockedTarget.transform != null);
         if (lockedTarget.transform != null && lockedTarget.transform.tag == "Player")
         {
             fireDelayTemp -= Time.deltaTime;
