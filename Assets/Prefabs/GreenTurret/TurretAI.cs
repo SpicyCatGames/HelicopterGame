@@ -9,7 +9,7 @@ public class TurretAI : MonoBehaviour
     [SerializeField] private Transform target = default;
     [Header("RotationThings")]
     [SerializeField] private float lookAngleOffset = -90f;
-    [SerializeField] private float targetingDeadzone = 2f;
+    [SerializeField][Range(0, 5)] private float targetingDeadzone = 2f; //how many degrees the target has to move before turret moves
     [SerializeField] private bool limitToOneDirection = true; //only moves when target on left or right, disabling this means the facingLeft variable becomes useless
     [SerializeField] private bool facingLeft = true; //limit targeting to left or right side
     [Header("ClampRotationCounterClockWise")]
@@ -18,17 +18,18 @@ public class TurretAI : MonoBehaviour
     [Header("Stats")]
     [SerializeField] private float rotatingSpeed = 20f;
     [SerializeField] private float firingRange = 3f;
-    
+    [Header("Rounds")]
+    [SerializeField] private GameObject round = default;
+    [SerializeField] private Vector2 firePoint = default;
+    [SerializeField] private float fireDelay = 2f;
+    private float fireDelayTemp;
+    [SerializeField][Range(0, 359)] private float firingAngleOffset = 0;
 
-    private float DifferenceFromRotatingPartZ;
-    private void Start()
-    {
-        DifferenceFromRotatingPartZ = rotatingPart.transform.rotation.eulerAngles.z - transform.rotation.eulerAngles.z;
-    }
     private void Update()
     {
         if (Vector2.Distance(rotatingPart.position, target.position) < firingRange) { //if target in range
             LookAtTarget();
+            Fire();
         }
         
     }
@@ -38,6 +39,7 @@ public class TurretAI : MonoBehaviour
         Vector2 direction = target.transform.position - rotatingPart.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + lookAngleOffset;
         if (angle < 0) angle += 360; //-180 -> 180 to 0 -> 360
+
         int rotatingDirection = RotatingDirection(rotatingPart.rotation.eulerAngles.z, angle);
 
         rotatingPart.rotation = Quaternion.AngleAxis(rotatingPart.rotation.eulerAngles.z + (rotatingDirection * rotatingSpeed * Time.deltaTime), Vector3.forward);
@@ -47,10 +49,7 @@ public class TurretAI : MonoBehaviour
     private int RotatingDirection(float currentRotation, float targetRotation)
     {
         //if target not on the correct side, don't move
-        if (limitToOneDirection && ((facingLeft && Vector2.Dot(target.position - transform.position, Vector3.left) <= 0) || (!facingLeft && Vector2.Dot(target.position - transform.position, Vector3.left) >= 0)))
-        {
-            return 0;
-        }
+        if (!targetOnCorrectSide()) return 0;
 
         if (currentRotation <= 180 && targetRotation > 180) {
             targetRotation = From360to180(targetRotation);
@@ -76,6 +75,25 @@ public class TurretAI : MonoBehaviour
         return 0;
     }
 
+    private void Fire()
+    {
+        fireDelayTemp -= Time.deltaTime;
+        if (fireDelayTemp < 0 && targetOnCorrectSide())
+        {
+            Instantiate(round, rotatingPart.TransformPoint((Vector3)firePoint), Quaternion.AngleAxis(rotatingPart.eulerAngles.z + firingAngleOffset, Vector3.forward));
+            fireDelayTemp = fireDelay;
+        }
+    }
+
+    private bool targetOnCorrectSide()
+    {
+        if (limitToOneDirection && ((facingLeft && Vector2.Dot(target.position - transform.position, Vector3.left) <= 0) || (!facingLeft && Vector2.Dot(target.position - transform.position, Vector3.left) >= 0)))
+        {
+            return false;
+        }
+        return true;
+    }
+
     private float From360to180(float angle)
     {
         if (angle > 180) return angle - 360;
@@ -87,11 +105,6 @@ public class TurretAI : MonoBehaviour
         return angle;
     }
 
-    private void Fire()
-    {
-            //Quaternion fireBallRotation = Quaternion.AngleAxis(rotatingPart.rotation.eulerAngles.z + 90, Vector3.forward);
-            //Instantiate(fireBall, firePoint.position, fireBallRotation);
-    }
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
@@ -103,5 +116,8 @@ public class TurretAI : MonoBehaviour
         Gizmos.color = Color.red;
         float degMax = Mathf.Deg2Rad * (maxRotation - lookAngleOffset);
         Gizmos.DrawLine(rotatingPart.position, (Vector2)rotatingPart.position + new Vector2(Mathf.Cos(degMax), Mathf.Sin(degMax)) * firingRange);
+
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawWireSphere(rotatingPart.TransformPoint(firePoint), 0.1f);
     }
 }
