@@ -30,6 +30,7 @@ public class TruckTurretAI : MonoBehaviour
     [SerializeField] private bool Fix2 = false;
 
     private LineRenderer laserLR = default;
+    private GameObject launchedMissile = null;
 
     private void Start()
     {
@@ -42,7 +43,11 @@ public class TruckTurretAI : MonoBehaviour
         if (Vector2.Distance(rotatingPart.position, target.position) < firingRange)
         { //if target in range
             LookAtTarget();
-            Fire();
+            if (launchedMissile == null)
+            {
+                Fire();
+            }
+            else laserLR.enabled = false; //disble laser immediately if we launched a missile
         }
         else
         {
@@ -107,7 +112,8 @@ public class TruckTurretAI : MonoBehaviour
             laserLR.SetPosition(1, hitObject.point);
             if (fireDelayTemp < 0 && targetOnCorrectSide())//if countdown has reached 0, fire a round
             {
-                Instantiate(round, rotatingPart.TransformPoint((Vector3)firePoint), Quaternion.AngleAxis(rotatingPart.eulerAngles.z + firingAngleOffset, Vector3.forward));
+                launchedMissile = Instantiate(round, rotatingPart.TransformPoint((Vector3)firePoint), Quaternion.AngleAxis(rotatingPart.eulerAngles.z + firingAngleOffset, Vector3.forward));
+                launchedMissile.GetComponent<GuidedMissile>()._target = target;
                 fireDelayTemp = lockOnDelay;
             }
         }

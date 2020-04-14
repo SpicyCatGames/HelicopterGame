@@ -1928,6 +1928,12 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 1636359929}
+    - target: {fileID: 7927016143907970712, guid: 9aa709670111a3e4c8eef0c6a5988305,
+        type: 3}
+      propertyPath: round
+      value: 
+      objectReference: {fileID: 2231807909065505800, guid: 6c0f9f88df2468c41abfc21733cec387,
+        type: 3}
     - target: {fileID: 7927016143907970717, guid: 9aa709670111a3e4c8eef0c6a5988305,
         type: 3}
       propertyPath: m_Name
