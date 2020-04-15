@@ -283,7 +283,7 @@ Transform:
   m_Children:
   - {fileID: 963385024}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1839735485 &537203204
 Tilemap:
@@ -1855,6 +1855,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07fba2c5327b65c4aa571cff0c3b1e00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _health: 100
 --- !u!1001 &2945224676046445378
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1910,7 +1911,7 @@ PrefabInstance:
     - target: {fileID: 2945224677726505999, guid: ef61dec6fd543c2468c7d35a57a2b72f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2945224677726505999, guid: ef61dec6fd543c2468c7d35a57a2b72f,
         type: 3}
