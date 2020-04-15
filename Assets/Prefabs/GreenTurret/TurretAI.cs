@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SilverUtils.Angle;
 
 public class TurretAI : MonoBehaviour
 {
@@ -55,13 +56,13 @@ public class TurretAI : MonoBehaviour
         if (!targetOnCorrectSide()) return 0;
 
         if (currentRotation <= 180 && targetRotation > 180) {
-            if(!Fix1)targetRotation = From360to180(targetRotation);
-            minRotation = From360to180(minRotation);
+            if(!Fix1)targetRotation = Degrees.From360to180(targetRotation);
+            minRotation = Degrees.From360to180(minRotation);
         }
         else if (targetRotation <= 180 && currentRotation > 180)
         {
-            if(!Fix2)currentRotation = From360to180(currentRotation);
-            maxRotation = From360to180(maxRotation);
+            if(!Fix2)currentRotation = Degrees.From360to180(currentRotation);
+            maxRotation = Degrees.From360to180(maxRotation);
         }
         //the first lines of these two if statements are to avoid snapping at the edges because of rotations going beyond zero or 359
         //the second one is for the clamp lines up next
@@ -95,17 +96,6 @@ public class TurretAI : MonoBehaviour
             return false;
         }
         return true;
-    }
-
-    private float From360to180(float angle)
-    {
-        if (angle > 180) return angle - 360;
-        return angle;
-    }
-    private float From180to360(float angle)
-    {
-        if (angle < 0) return angle + 360;
-        return angle;
     }
 
     private void OnDrawGizmosSelected()
