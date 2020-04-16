@@ -207,6 +207,7 @@ GameObject:
   - component: {fileID: 2945224677726505999}
   - component: {fileID: 2945224677726505996}
   - component: {fileID: 2945224677726505997}
+  - component: {fileID: 3771476636031375725}
   m_Layer: 0
   m_Name: TurretBase
   m_TagString: Untagged
@@ -307,6 +308,22 @@ MonoBehaviour:
   firePoint: {x: -1.085, y: 1.213}
   fireDelay: 2
   firingAngleOffset: 46
+  Fix1: 0
+  Fix2: 0
+--- !u!114 &3771476636031375725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2945224677726505998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f226714b131d1b846a5cbfdf0ecdf104, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: 100
+  _explosion: {fileID: 139366, guid: b185c1a9cf067374586d095111b15bd1, type: 3}
 --- !u!1 &2945224677962722003
 GameObject:
   m_ObjectHideFlags: 0

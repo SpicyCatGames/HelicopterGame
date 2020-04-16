@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7927016143907970718}
   - component: {fileID: 7927016143907970712}
   - component: {fileID: 7927016143907970713}
+  - component: {fileID: 1220319935116905386}
   m_Layer: 0
   m_Name: Truck
   m_TagString: Untagged
@@ -136,7 +137,7 @@ MonoBehaviour:
   round: {fileID: 2481690899900892295, guid: 89aecd06114433e498b4ab92bf4a4d42, type: 3}
   firePoint: {x: 0.083, y: 0}
   laserDirection: {x: 1, y: 0}
-  fireDelay: 2
+  lockOnDelay: 2
   firingAngleOffset: 270
   Fix1: 1
   Fix2: 0
@@ -237,6 +238,20 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!114 &1220319935116905386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7927016143907970717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c286d5435d5b0d443b28fbbcc931ac52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: 100
+  _explosion: {fileID: 139366, guid: b185c1a9cf067374586d095111b15bd1, type: 3}
 --- !u!1 &7927016145191089634
 GameObject:
   m_ObjectHideFlags: 0

@@ -36,7 +36,7 @@ public class TruckTurretAI : MonoBehaviour
     private void Start()
     {
         laserLR = GetComponent<LineRenderer>();
-        laserLR.enabled = false;
+        //laserLR.enabled = false;
     }
 
     private void Update()

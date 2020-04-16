@@ -3,18 +3,24 @@ using System.Collections;
 
 public class Shell : MonoBehaviour
 {
-    [SerializeField] private float speed = 2;
-    [SerializeField] private float lifeTime = 10;
+    [SerializeField] private float _speed = 2;
+    [SerializeField] private int _damage = 10;
+    [SerializeField] private float _lifeTime = 10;
     void FixedUpdate()
     {
-        transform.position += transform.TransformDirection(Vector2.up) * speed * Time.deltaTime;
+        transform.position += transform.TransformDirection(Vector2.up) * _speed * Time.deltaTime;
     }
     private void Update()
     {
-        lifeTime -= Time.deltaTime;
-        if (lifeTime < 0)
+        _lifeTime -= Time.deltaTime;
+        if (_lifeTime < 0)
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        collision.GetComponent<ITakeDamagable>()?.TakeDamage(_damage);
+        Destroy(gameObject);
     }
 }

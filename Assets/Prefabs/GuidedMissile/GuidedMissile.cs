@@ -9,15 +9,21 @@ public class GuidedMissile : MonoBehaviour
     [SerializeField] private float _speed = 20f;
     [SerializeField] private float _rotatingSpeed = 5f;
     [SerializeField] private float _lifeTime = 10f;
+    [SerializeField] private float delayToDamageLauncher = 0.5f; //the amount of time after which it will be able to damage the device it was launched from
+    //without delayToDamageLauncher, it sometimes hurts the launcher when launching
+    [SerializeField] private string launcherTag = default;
     private Rigidbody2D _rb;
     [Header("Stats")]
     [SerializeField] private int _damage = 40;
     [SerializeField] private GameObject _explosion = default;
     [SerializeField] private float _aoeRadius = 2f;
 
+    private float lifeTimeDefault;
+
 	void Start()
 	{
         _rb = GetComponent<Rigidbody2D>();
+        lifeTimeDefault = _lifeTime;
 	}
 
     private void Update()
@@ -46,7 +52,16 @@ public class GuidedMissile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Destroy(gameObject);
+        if (launcherTag != null && collision.transform.tag == launcherTag) { //if colliders with launcher that lauched this missile
+            if (_lifeTime + delayToDamageLauncher < lifeTimeDefault)//if activationdelay has passed
+            {
+                Destroy(gameObject);
+            }
+        }
+        else//if colliding with other object
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnDestroy()
@@ -54,8 +69,7 @@ public class GuidedMissile : MonoBehaviour
         Collider2D[] hitObjects = Physics2D.OverlapCircleAll(transform.position, _aoeRadius); //aoe check
         foreach (Collider2D hitObject in hitObjects) //aoe damage
         {
-            ITakeDamagable hitObjectDamageScript = hitObject.GetComponent<ITakeDamagable>();
-            if (hitObjectDamageScript != null) hitObjectDamageScript.TakeDamage(_damage);
+            hitObject.GetComponent<ITakeDamagable>()?.TakeDamage(_damage);
         }
 
         Instantiate(_explosion, transform.position, Quaternion.identity);

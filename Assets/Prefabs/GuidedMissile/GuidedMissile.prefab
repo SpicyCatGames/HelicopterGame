@@ -102,7 +102,9 @@ MonoBehaviour:
   _speed: 2
   _rotatingSpeed: 50
   _lifeTime: 10
-  _damage: 40
+  delayToDamageLauncher: 0.5
+  launcherTag: Turret
+  _damage: 50
   _explosion: {fileID: 139366, guid: b185c1a9cf067374586d095111b15bd1, type: 3}
   _aoeRadius: 0.76
 --- !u!50 &2231807909065505804
