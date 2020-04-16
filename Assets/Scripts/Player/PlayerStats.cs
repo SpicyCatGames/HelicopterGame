@@ -23,12 +23,13 @@ public class PlayerStats : MonoBehaviour, ITakeDamagable
 
     private IEnumerator PlayerDeath()
     {
-        if (GetComponent<SpriteRenderer>() != null)
-        {
-            GetComponent<SpriteRenderer>().enabled = false;
-        }
+        if (GetComponent<SpriteRenderer>() != null) GetComponent<SpriteRenderer>().enabled = false;
+        if (GetComponent<PlayerController>() != null) GetComponent<PlayerController>().enabled = false;
+
         if (_explosion != null) Instantiate(_explosion, transform.position, Quaternion.identity);
+
         yield return new WaitForSeconds(1f);
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         throw new NotImplementedException();
     }
