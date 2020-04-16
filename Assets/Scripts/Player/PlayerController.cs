@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SilverUtils.Angle;
 
 public class PlayerController : MonoBehaviour
 {
@@ -35,7 +36,7 @@ public class PlayerController : MonoBehaviour
         _rb.AddTorque( -myInputs.Horizontal * rotationSpeed *Time.deltaTime*timeCorrectionFactor);
 
         //Stabilize
-        float rotationZ = From360To180(transform.eulerAngles.z);
+        float rotationZ = Degrees.From360to180(transform.eulerAngles.z);
         float stabilizationMultiplier = rotationZ / maxRotation;
         if (Mathf.Abs(stabilizationMultiplier) > minRotationtoStabilize)
         { 
@@ -54,13 +55,13 @@ public class PlayerController : MonoBehaviour
     }
     private void ClampRotation()
     {
-        float zClamped = From360To180(transform.eulerAngles.z);
+        float zClamped = Degrees.From360to180(transform.eulerAngles.z);
         zClamped = Mathf.Clamp(zClamped, initialRotation - maxRotation, initialRotation + maxRotation);
         transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, zClamped);
     }
     private void Movement()
     {
-        float horizontalMovement = Mathf.Sin(From360To180(transform.eulerAngles.z) / maxRotation * 90 * Mathf.Deg2Rad) * horizontalSpeed;
+        float horizontalMovement = Mathf.Sin(Degrees.From360to180(transform.eulerAngles.z) / maxRotation * 90 * Mathf.Deg2Rad) * horizontalSpeed;
         float verticalMovement = myInputs.Vertical;
 
         verticalMovement *= verticalSpeed;
@@ -72,8 +73,8 @@ public class PlayerController : MonoBehaviour
         _rb.AddForce(new Vector2(horizontalMovement, verticalMovement) * Time.deltaTime * timeCorrectionFactor);
     }
 
-    private float From360To180(float rotation)
+    /*private float From360To180(float rotation)
     {
         return rotation = (rotation > 180) ? (-360 + rotation) : rotation;
-    }
+    }*/
 }
