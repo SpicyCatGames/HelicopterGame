@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2231807909065505804}
   - component: {fileID: -2187290869114930891}
   - component: {fileID: -7235075447405580233}
-  - component: {fileID: 7861175044423902136}
+  - component: {fileID: 6609570485756123116}
   m_Layer: 0
   m_Name: GuidedMissile
   m_TagString: Untagged
@@ -4850,8 +4850,8 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!58 &7861175044423902136
-CircleCollider2D:
+--- !u!70 &6609570485756123116
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -4863,6 +4863,6 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.33400297, y: 0.58}
-  serializedVersion: 2
-  m_Radius: 0.10732746
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.21310157, y: 0.72}
+  m_Direction: 0

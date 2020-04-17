@@ -7,14 +7,14 @@ namespace customInputs
 
     public class InputHandler : MonoBehaviour
     {
-        private float horizontal;
-        public float Horizontal { get => horizontal; }
-        private float vertical;
-        public float Vertical { get => vertical; }
+        public float Horizontal { get; private set; }
+        public float Vertical { get; private set; }
+        public bool SpaceKey { get; private set; }
         void Update()
         {
-            horizontal = Input.GetAxisRaw("Horizontal");
-            vertical = Input.GetAxisRaw("Vertical");
+            Horizontal = Input.GetAxisRaw("Horizontal");
+            Vertical = Input.GetAxisRaw("Vertical");
+            SpaceKey = Input.GetKey(KeyCode.Space);
         }
     }
 

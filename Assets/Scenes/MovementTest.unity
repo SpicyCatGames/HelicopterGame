@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
   - component: {fileID: 519420033}
+  - component: {fileID: 519420034}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -240,6 +241,37 @@ MonoBehaviour:
   m_CropFrameX: 0
   m_CropFrameY: 0
   m_StretchFill: 0
+--- !u!114 &519420034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_CameraOutput: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
 --- !u!1 &537203201
 GameObject:
   m_ObjectHideFlags: 0
@@ -1664,6 +1696,7 @@ GameObject:
   - component: {fileID: 1636359932}
   - component: {fileID: 1636359934}
   - component: {fileID: 1636359933}
+  - component: {fileID: 1636359935}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -1845,22 +1878,18 @@ PolygonCollider2D:
       - {x: 0.78499997, y: 0.35}
       - {x: 0.265, y: 0.39}
       - {x: 0.235, y: 0.52}
-      - {x: 2.0149999, y: 0.53}
-      - {x: 2.055, y: 0.56}
-      - {x: 2.065, y: 0.58}
-      - {x: 1.925, y: 0.65}
+      - {x: 0.9774184, y: 0.5458007}
+      - {x: 0.96115494, y: 0.6131315}
       - {x: 0.515, y: 0.63}
-      - {x: 0.515, y: 0.65}
-      - {x: 0.285, y: 0.65999997}
+      - {x: 0.5097327, y: 0.64999986}
+      - {x: 0.063789845, y: 0.6441994}
       - {x: -0.074999996, y: 0.65999997}
       - {x: -0.105, y: 0.64}
-      - {x: -0.545, y: 0.65}
+      - {x: -0.45546246, y: 0.6183982}
       - {x: -0.545, y: 0.63}
-      - {x: -1.9549999, y: 0.63}
-      - {x: -2.065, y: 0.61}
-      - {x: -2.085, y: 0.57}
-      - {x: -2.085, y: 0.53999996}
-      - {x: -2.055, y: 0.53}
+      - {x: -0.9858885, y: 0.61946607}
+      - {x: -1.021987, y: 0.54116213}
+      - {x: -1.0376072, y: 0.5463879}
       - {x: -0.265, y: 0.53}
       - {x: -0.265, y: 0.42999998}
       - {x: -0.33499998, y: 0.34}
@@ -1890,6 +1919,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _health: 100
   _explosion: {fileID: 139366, guid: b185c1a9cf067374586d095111b15bd1, type: 3}
+--- !u!114 &1636359935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1636359927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c0e25935f290f7448d66dff62933a24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _myInputs: {fileID: 1035964220}
+  _round: {fileID: 3730894401022928007, guid: c1ed17ee273772648be768b4494b3be3, type: 3}
+  _firePoint: {x: -1.37, y: -0.59}
+  _fireDelay: 0.7
+  _firingAngleOffset: 270
 --- !u!1001 &2945224676046445378
 PrefabInstance:
   m_ObjectHideFlags: 0
