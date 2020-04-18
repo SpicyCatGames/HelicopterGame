@@ -99,6 +99,9 @@ MonoBehaviour:
   _speed: 2
   _damage: 12
   _lifeTime: 10
+  _velocityRB: {fileID: 0}
+  _rbSpeedMultiplier: 0
+  _tagToIgnore: 
 --- !u!70 &4524179439456607958
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
