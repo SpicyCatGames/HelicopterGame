@@ -11,6 +11,8 @@ public class Shell : MonoBehaviour
     [SerializeField] private float _rbSpeedMultiplier = .1f;
     [Header("Optional,filled by launcher")]
     public string _tagToIgnore = default;
+    [Header("Optional explosion")]
+    [SerializeField] private GameObject _explosion = default;
     private void Start()
     {
         if (_velocityRB != null)
@@ -35,6 +37,12 @@ public class Shell : MonoBehaviour
     {
         if (collision.tag == _tagToIgnore) return;
         collision.GetComponent<ITakeDamagable>()?.TakeDamage(_damage);
+        if (_explosion != null)
+        {
+            GameObject launchedExplosion = Instantiate(_explosion, transform.position, Quaternion.identity);
+            launchedExplosion.transform.localScale = new Vector3(0.1f, 0.1f, 1f);
+            launchedExplosion.GetComponent<DespawnExplosion>()._lifeTime = .6f;
+        }
         Destroy(gameObject);
     }
 }
