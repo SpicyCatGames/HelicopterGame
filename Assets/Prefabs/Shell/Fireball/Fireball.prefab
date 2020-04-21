@@ -97,9 +97,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76f82d2e6afff144c9dc3595ccb0163e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 3
-  _damage: 20
-  _lifeTime: 10
+  _speed: 5
+  _damage: 10
+  _lifeTime: 7
   _velocityRB: {fileID: 0}
   _rbSpeedMultiplier: 0
   _tagToIgnore: 
