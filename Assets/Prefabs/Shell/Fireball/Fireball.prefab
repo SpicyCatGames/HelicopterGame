@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8730904038574993170}
   - component: {fileID: 7651123567539925335}
   - component: {fileID: -1778005820417618322}
+  - component: {fileID: 552832966251261446}
   m_Layer: 0
   m_Name: Fireball
   m_TagString: Untagged
@@ -52,7 +53,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 96d694a93b9428249b02c0787a72d348, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -96,11 +97,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76f82d2e6afff144c9dc3595ccb0163e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 3
-  _damage: 20
-  _lifeTime: 10
+  _speed: 5
+  _damage: 10
+  _lifeTime: 7
   _velocityRB: {fileID: 0}
-  _rbSpeedMultiplier: 0.1
+  _rbSpeedMultiplier: 0
+  _tagToIgnore: 
+  _explosion: {fileID: 139366, guid: b185c1a9cf067374586d095111b15bd1, type: 3}
 --- !u!58 &7651123567539925335
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -138,3 +141,44 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &552832966251261446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3730894401022928007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_LightType: 3
+  m_BlendStyleIndex: 1
+  m_FalloffIntensity: 0.5
+  m_Color: {r: 0.9686275, g: 0.41960788, b: 0.019607844, a: 1}
+  m_Intensity: 1.8
+  m_LightVolumeOpacity: 0.01
+  m_ApplyToSortingLayers: 00000000
+  m_LightCookieSprite: {fileID: 0}
+  m_UseNormalMap: 1
+  m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 1
+  m_ShadowIntensity: 1
+  m_ShadowVolumeIntensity: 0
+  m_PointLightInnerAngle: 360
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 0.7862276
+  m_PointLightOuterRadius: 1.54
+  m_PointLightDistance: 0.83
+  m_PointLightQuality: 1
+  m_ShapeLightParametricSides: 5
+  m_ShapeLightParametricAngleOffset: 0
+  m_ShapeLightParametricRadius: 1
+  m_ShapeLightFalloffSize: 0.5
+  m_ShapeLightFalloffOffset: {x: 0, y: 0}
+  m_ShapePath:
+  - {x: -0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: 0.5, z: 0}
+  - {x: -0.5, y: 0.5, z: 0}
