@@ -42,3 +42,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: LightBody
+    uniqueID: 2015831099
+    locked: 0
+  - name: Foreground
+    uniqueID: 2955067303
+    locked: 0
