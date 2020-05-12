@@ -546,7 +546,7 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
---- !u!43 &890787694
+--- !u!43 &905218895
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1934,8 +1934,8 @@ MonoBehaviour:
   - {x: 5.1997457, y: -2.1628869, z: 0}
   - {x: 1.8747513, y: -2.1071491, z: 0}
   m_ShapePathHash: -941660125
-  m_Mesh: {fileID: 890787694}
-  m_InstanceId: 16556
+  m_Mesh: {fileID: 905218895}
+  m_InstanceId: 16568
 --- !u!1 &1035964218
 GameObject:
   m_ObjectHideFlags: 0
@@ -2172,7 +2172,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9407070c7a42e6448aa857cc46b25fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myInputs: {fileID: 1035964220}
   rotationSpeed: 1.2
   maxRotation: 30
   minRotationtoStabilize: 0.135
@@ -2307,7 +2306,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c0e25935f290f7448d66dff62933a24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _myInputs: {fileID: 1035964220}
   _round: {fileID: 3730894401022928007, guid: c1ed17ee273772648be768b4494b3be3, type: 3}
   _firePoint: {x: -1.14, y: -0.6}
   _fireDelay: 0.35
