@@ -14,7 +14,13 @@ namespace customInputs
         #region TouchInput fields
         private Vector2[] _startTouchPosition = new Vector2[2];
         [SerializeField] [Range(0, 1)] private float radiusSizeMultiplier = 1; //how much of the display height to be used as ui joystick radius
+        private LineRenderer _lr;
         #endregion
+
+        private void Start()
+        {
+            _lr = GetComponent<LineRenderer>();
+        }
 
         void Update()
         {
@@ -71,7 +77,7 @@ namespace customInputs
                 for (int x = 0; x < activeTouches; x++)
                 {
                     //if touching on left half of screen
-                    if(_startTouchPosition[x].x <= Screen.width / 2)
+                    if(Input.GetTouch(x).position.x <= Screen.width / 2)
                     {
                         TouchControlProcessor(Input.GetTouch(x), _startTouchPosition[x]);
                     }
@@ -97,11 +103,16 @@ namespace customInputs
                     float verticalUnscaled = touch.position.y - startTouchPosition.y;
                     float verticalScaled = verticalUnscaled / scalingDivisor;
                     Vertical = (verticalScaled < 1) ? verticalScaled : 1;
+
+                    _lr.enabled = true;
+                    _lr.SetPosition(0, Camera.main.ScreenToWorldPoint(new Vector3(startTouchPosition.x, startTouchPosition.y, 1)));
+                    _lr.SetPosition(1, Camera.main.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 1)));
                     break;
 
                 case TouchPhase.Ended:
                     Horizontal = 0;
                     Vertical = 0;
+                    _lr.enabled = false;
                     break;
             }
         }
