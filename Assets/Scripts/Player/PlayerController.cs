@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SilverUtils.Angle;
+using customInputs;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private customInputs.InputHandler myInputs = default;
     [SerializeField] private float rotationSpeed = 10f;
     [SerializeField] private float maxRotation = 30f;
     [SerializeField][Range(0 , 1)] private float minRotationtoStabilize = .3f;
@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
     private void RotatePlayer()
     {
         //rotate
-        _rb.AddTorque( -myInputs.Horizontal * rotationSpeed *Time.deltaTime*timeCorrectionFactor);
+        _rb.AddTorque( -InputHandler.Horizontal * rotationSpeed *Time.deltaTime*timeCorrectionFactor);
 
         //Stabilize
         float rotationZ = Degrees.From360to180(transform.eulerAngles.z);
@@ -62,10 +62,10 @@ public class PlayerController : MonoBehaviour
     private void Movement()
     {
         float horizontalMovement = Mathf.Sin(Degrees.From360to180(transform.eulerAngles.z) / maxRotation * 90 * Mathf.Deg2Rad) * horizontalSpeed;
-        float verticalMovement = myInputs.Vertical;
+        float verticalMovement = InputHandler.Vertical;
 
         verticalMovement *= verticalSpeed;
-        if(myInputs.Vertical < 0) //if going down
+        if(InputHandler.Vertical < 0) //if going down
         {
             verticalMovement *= descendingMultiplier;
         }

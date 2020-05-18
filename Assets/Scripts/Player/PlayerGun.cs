@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerGun : MonoBehaviour
 {
-    [SerializeField] private customInputs.InputHandler _myInputs = default;
     [SerializeField] private GameObject _round = default;
     [SerializeField] private Vector2 _firePoint = default;
     [SerializeField] private float _fireDelay = 1f;
@@ -14,7 +13,7 @@ public class PlayerGun : MonoBehaviour
 
     private void Update()
     {
-        if (_myInputs.SpaceKey && _fireDelayCounter < 0)
+        if (customInputs.InputHandler.SpaceKey && _fireDelayCounter < 0)
         {
             GameObject launchedRound = Instantiate(_round, transform.TransformPoint(_firePoint), Quaternion.AngleAxis(_firingAngleOffset - transform.eulerAngles.z, Vector3.forward));
             Shell shellScript = launchedRound.GetComponent<Shell>();
