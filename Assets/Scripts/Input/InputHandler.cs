@@ -36,30 +36,6 @@ namespace customInputs
             SpaceKey = Input.GetKey(KeyCode.Space);
         }
 
-        /*void MouseInput()
-        {
-            float scalingDivisor = Screen.height * radiusSizeMultiplier;
-            if (Input.GetMouseButtonDown(0)) //equivalent to touch start
-            {
-                _startTouchPosition = Input.mousePosition;
-            }
-            else if (Input.GetMouseButton(0)) //equivalent to touch continuing
-            {
-                float horizontalUnscaled = Input.mousePosition.x - _startTouchPosition.x;
-                float horizontalScaled = horizontalUnscaled / scalingDivisor;
-                Horizontal = (horizontalScaled < 1) ? horizontalScaled : 1;
-
-                float verticalUnscaled = Input.mousePosition.y - _startTouchPosition.y;
-                float verticalScaled = verticalUnscaled / scalingDivisor;
-                Vertical = (verticalScaled < 1) ? verticalScaled : 1;
-            }
-            else if (Input.GetMouseButtonUp(0)) //equivalent to touch release
-            {
-                Horizontal = 0;
-                Vertical = 0;
-            }
-        }*/
-
         void TouchInput()
         {
             if (Input.touchCount > 0)
