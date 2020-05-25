@@ -44,7 +44,16 @@ public class PlayerGun : MonoBehaviour
 
     private void Update()
     {
-        if (_currentState == _states.scanning) SweepRayCast();
+        if (_currentState == _states.scanning)
+        {
+            SweepRayCast();
+            Debug.Log("Sweeping");
+        }
+        else
+        {
+            Debug.Log($"Tracking {_target.name}");
+            TrackTarget();
+        }
     }
 
     private void SweepRayCast()
@@ -62,9 +71,25 @@ public class PlayerGun : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(transform.TransformPoint(_firePoint), currentDirection, _rayCastDistance, _targetLayers);
             if (hit.transform != null)
             {
-                _target = hit.transform;
-                _currentState = _states.tracking; //switch to tracking state when we hit something
+                //now we only switch state if we have a clear line of sight to this hit
+                RaycastHit2D sightCheck = Physics2D.Raycast(transform.TransformPoint(_firePoint), currentDirection, _rayCastDistance);
+                if (sightCheck.transform == hit.transform) {
+                    _target = hit.transform;
+                    _currentState = _states.tracking; //switch to tracking state when we hit something
+                }
             }
+        }
+    }
+
+    private void TrackTarget()
+    {
+        //track to see if _target is in line of sight
+        //otherwise switch back to scanning state
+        RaycastHit2D hit = Physics2D.Raycast(transform.TransformPoint(_firePoint), _target.position - transform.TransformPoint(_firePoint), _rayCastDistance);
+        if (hit.transform != _target)
+        {
+            _target = null;
+            _currentState = _states.scanning;
         }
     }
 
