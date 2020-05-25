@@ -92,7 +92,19 @@ namespace SilverUtils.Angle
             }
 
             return eulerAngle;
-        } 
+        }
+
+        /// <summary>
+        /// Values must be between 0 and 359.99999999999999999
+        /// </summary>
+        public static bool RotationIsBetween(float eulerAngle, float minEuler, float maxEuler)
+        {
+            if(RotationDirection(eulerAngle, minEuler) == -1 && RotationDirection(eulerAngle, maxEuler) == 1)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SilverUtils.Angle;
 
 //targets can be identified by if they have <ITakeDamagable>
 //but it's good to have seperate layers for enemy too for raycast, doing getcomponent on so many is bad for performance
@@ -83,10 +84,14 @@ public class PlayerGun : MonoBehaviour
 
     private void TrackTarget()
     {
-        //track to see if _target is in line of sight
+        //track to see if _target is in line of sight and in given angle constraint
         //otherwise switch back to scanning state
-        RaycastHit2D hit = Physics2D.Raycast(transform.TransformPoint(_firePoint), _target.position - transform.TransformPoint(_firePoint), _rayCastDistance);
-        if (hit.transform != _target)
+        Vector2 direction = _target.position - transform.TransformPoint(_firePoint);
+        //need to check here if it's between the constraints
+        float directionEuler = Degrees.Vec2toDeg(direction);
+        bool directionIsInConstraint = Degrees.RotationIsBetween(directionEuler, Degrees.Normalizeto360(_startAngle), Degrees.Normalizeto360(_endAngle));
+        RaycastHit2D hit = Physics2D.Raycast(transform.TransformPoint(_firePoint), direction, _rayCastDistance);
+        if (hit.transform != _target || !directionIsInConstraint) //if not in line of sight (check if also not in constraint angles)
         {
             _target = null;
             _currentState = _states.scanning;
