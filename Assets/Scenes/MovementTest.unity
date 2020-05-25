@@ -2388,7 +2388,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07fba2c5327b65c4aa571cff0c3b1e00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 10000
+  _health: 200
   _explosion: {fileID: 139366, guid: b185c1a9cf067374586d095111b15bd1, type: 3}
 --- !u!1 &1690762007
 GameObject:
@@ -2488,11 +2488,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1536
   _firePoint: {x: -0.72, y: 0}
-  _lowerAssistMaxAngle: 10
-  _higherAssistMaxAngle: 10
-  _sweepCastSections: 10
-  _sectionsPerFrame: 1
-  _rayCastDistance: 5
+  _lowerAssistMaxAngle: -0.74
+  _higherAssistMaxAngle: 81.42
+  _sweepCastSections: 24
+  _sectionsPerFrame: 2
+  _rayCastDistance: 12
 --- !u!1 &1727626072
 GameObject:
   m_ObjectHideFlags: 0

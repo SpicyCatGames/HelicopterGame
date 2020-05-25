@@ -66,7 +66,7 @@ public class PlayerGun : MonoBehaviour
                 break;
             }
             float currentAngle = _startAngle + (_sectionWidth * _currentSectionIndex);
-            Vector2 currentDirection = SilverUtils.Angle.Degrees.DegtoVec2(currentAngle);
+            Vector2 currentDirection = transform.TransformDirection(SilverUtils.Angle.Degrees.DegtoVec2(currentAngle + 180));
             //raycast code here
             RaycastHit2D hit = Physics2D.Raycast(transform.TransformPoint(_firePoint), currentDirection, _rayCastDistance, _targetLayers);
             if (hit.transform != null)
@@ -93,7 +93,7 @@ public class PlayerGun : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         //Draw firepoint
         Gizmos.color = Color.red;
@@ -104,14 +104,15 @@ public class PlayerGun : MonoBehaviour
         float startRotation = transform.rotation.z - _lowerAssistMaxAngle;
         float endRotation = transform.rotation.z + _higherAssistMaxAngle;
         float sectionWidth = (endRotation - startRotation) / _sweepCastSections;
-        for (float currentRotation = startRotation; currentRotation <= endRotation; currentRotation += sectionWidth)
+        for (int currentIndex = 0; currentIndex < _sweepCastSections; currentIndex++)
         {
+            float currentRotation = startRotation + currentIndex * sectionWidth;
             //this will iterate between all the angles at which we need to raycast
             //for the actual game, we would do only one per frame
             //or have a way to adjust how many to do per frame which may become necessary
             //it can be dependent on player's speed too altho I donno what effect that will have on FPS
             //we can have a lock on to current target as long as in line of sight mechanism
-            Gizmos.DrawLine(transform.TransformPoint(_firePoint), (Vector2)transform.TransformPoint(_firePoint) + (SilverUtils.Angle.Degrees.DegtoVec2(currentRotation) * _rayCastDistance));
+            Gizmos.DrawLine(transform.TransformPoint(_firePoint), (Vector2)transform.TransformPoint(_firePoint) + (Vector2)transform.TransformDirection(SilverUtils.Angle.Degrees.DegtoVec2(currentRotation + 180) * _rayCastDistance));
         }
     }
 
