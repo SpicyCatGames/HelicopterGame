@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
-  _damage: 10
+  _damage: 5
   _lifeTime: 7
   _velocityRB: {fileID: 0}
   _rbSpeedMultiplier: 0
