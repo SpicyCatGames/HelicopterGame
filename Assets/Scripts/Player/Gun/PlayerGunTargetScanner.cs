@@ -6,8 +6,9 @@ using SilverUtils.Angle;
 //targets can be identified by if they have <ITakeDamagable>
 //but it's good to have seperate layers for enemy too for raycast, doing getcomponent on so many is bad for performance
 //there will be two states, searching and locked/tracking
-public class PlayerGun : MonoBehaviour
+public class PlayerGunTargetScanner : MonoBehaviour
 {
+    
     [SerializeField] private LayerMask _targetLayers = default;
     [Header("SWEEP RAYCAST STUFF", order = 0)]
     [Space(20, order = 1)]
@@ -17,6 +18,8 @@ public class PlayerGun : MonoBehaviour
     [SerializeField] private int _sweepCastSections = 5;
     [SerializeField] private int _sectionsPerFrame = 1;
     [SerializeField] private float _rayCastDistance = 5f;
+
+    [SerializeField]Transform _parentTransform = default;
 
     private float _startAngle; //the euler Z at the minimum allowed z rotation
     private float _endAngle; //the euler Z at the max allowed z rotation
@@ -30,7 +33,7 @@ public class PlayerGun : MonoBehaviour
     }
     private _states _currentState = _states.scanning;
 
-    private Transform _target;
+    public Transform _target { get; private set; }
     //[SerializeField] private GameObject _round = default;
     //[SerializeField] private float _fireDelay = 1f;
     //[SerializeField] private float _firingAngleOffset = -90f;
@@ -48,11 +51,11 @@ public class PlayerGun : MonoBehaviour
         if (_currentState == _states.scanning)
         {
             SweepRayCast();
-            Debug.Log("Sweeping");
+            //Debug.Log("Sweeping");
         }
         else
         {
-            Debug.Log($"Tracking {_target.name}");
+            //Debug.Log($"Tracking {_target.name}");
             TrackTarget();
         }
     }
@@ -67,7 +70,7 @@ public class PlayerGun : MonoBehaviour
                 break;
             }
             float currentAngle = _startAngle + (_sectionWidth * _currentSectionIndex);
-            Vector2 currentDirection = transform.TransformDirection(SilverUtils.Angle.Degrees.DegtoVec2(currentAngle + 180));
+            Vector2 currentDirection = _parentTransform.TransformDirection(SilverUtils.Angle.Degrees.DegtoVec2(currentAngle + 180));
             //raycast code here
             RaycastHit2D hit = Physics2D.Raycast(transform.TransformPoint(_firePoint), currentDirection, _rayCastDistance, _targetLayers);
             if (hit.transform != null)
@@ -77,6 +80,7 @@ public class PlayerGun : MonoBehaviour
                 if (sightCheck.transform == hit.transform) {
                     _target = hit.transform;
                     _currentState = _states.tracking; //switch to tracking state when we hit something
+                    return;
                 }
             }
         }
@@ -88,10 +92,11 @@ public class PlayerGun : MonoBehaviour
         //otherwise switch back to scanning state
         Vector2 direction = _target.position - transform.TransformPoint(_firePoint);
         //need to check here if it's between the constraints
-        float directionEuler = Degrees.Vec2toDeg(direction);
+        float directionEuler = Degrees.Normalizeto360(Degrees.Vec2toDeg(direction) + 90);
+        Debug.Log(directionEuler + " " + _startAngle + " " + _endAngle);
         bool directionIsInConstraint = Degrees.RotationIsBetween(directionEuler, Degrees.Normalizeto360(_startAngle), Degrees.Normalizeto360(_endAngle));
         RaycastHit2D hit = Physics2D.Raycast(transform.TransformPoint(_firePoint), direction, _rayCastDistance);
-        if (hit.transform != _target || !directionIsInConstraint) //if not in line of sight (check if also not in constraint angles)
+        if (hit.transform != _target || !directionIsInConstraint) //if not in line of sight or in constraint angles
         {
             _target = null;
             _currentState = _states.scanning;
@@ -117,20 +122,7 @@ public class PlayerGun : MonoBehaviour
             //or have a way to adjust how many to do per frame which may become necessary
             //it can be dependent on player's speed too altho I donno what effect that will have on FPS
             //we can have a lock on to current target as long as in line of sight mechanism
-            Gizmos.DrawLine(transform.TransformPoint(_firePoint), (Vector2)transform.TransformPoint(_firePoint) + (Vector2)transform.TransformDirection(SilverUtils.Angle.Degrees.DegtoVec2(currentRotation + 180) * _rayCastDistance));
+            Gizmos.DrawLine(transform.TransformPoint(_firePoint), (Vector2)transform.TransformPoint(_firePoint) + (Vector2)_parentTransform.TransformDirection(SilverUtils.Angle.Degrees.DegtoVec2(currentRotation + 180) * _rayCastDistance));
         }
     }
-
-    /*private void Update()
-    {
-        if (customInputs.InputHandler.SpaceKey && _fireDelayCounter < 0)
-        {
-            GameObject launchedRound = Instantiate(_round, transform.TransformPoint(_firePoint), Quaternion.AngleAxis(_firingAngleOffset - transform.eulerAngles.z, Vector3.forward));
-            Shell shellScript = launchedRound.GetComponent<Shell>();
-            shellScript._velocityRB = GetComponent<Rigidbody2D>();
-            shellScript._tagToIgnore = tag;
-            _fireDelayCounter = _fireDelay;
-        }
-        _fireDelayCounter -= Time.deltaTime;
-    }*/
 }
