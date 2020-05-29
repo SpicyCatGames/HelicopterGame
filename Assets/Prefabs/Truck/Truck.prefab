@@ -133,11 +133,11 @@ MonoBehaviour:
   minRotation: 108
   maxRotation: 169
   rotatingSpeed: 20
-  firingRange: 8
+  firingRange: 9
   round: {fileID: 2231807909065505800, guid: 6c0f9f88df2468c41abfc21733cec387, type: 3}
   firePoint: {x: 0.083, y: 0}
   laserDirection: {x: 1, y: 0}
-  lockOnDelay: 2
+  lockOnDelay: 1.5
   firingAngleOffset: 270
   Fix1: 1
   Fix2: 0
@@ -250,7 +250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c286d5435d5b0d443b28fbbcc931ac52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 100
+  _health: 180
   _explosion: {fileID: 139366, guid: b185c1a9cf067374586d095111b15bd1, type: 3}
 --- !u!1 &7927016145191089634
 GameObject:

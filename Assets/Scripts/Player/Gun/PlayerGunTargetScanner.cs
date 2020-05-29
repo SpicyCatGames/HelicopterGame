@@ -10,9 +10,9 @@ public class PlayerGunTargetScanner : MonoBehaviour
 {
     
     [SerializeField] private LayerMask _targetLayers = default;
+    [field: SerializeField] public Vector2 _firePoint { get; private set; } = default;
     [Header("SWEEP RAYCAST STUFF", order = 0)]
     [Space(20, order = 1)]
-    [SerializeField] private Vector2 _firePoint = default;
     [SerializeField] private float _lowerAssistMaxAngle = 10f;
     [SerializeField] private float _higherAssistMaxAngle = 10f;
     [SerializeField] private int _sweepCastSections = 5;
@@ -76,7 +76,7 @@ public class PlayerGunTargetScanner : MonoBehaviour
             if (hit.transform != null)
             {
                 //now we only switch state if we have a clear line of sight to this hit
-                RaycastHit2D sightCheck = Physics2D.Raycast(transform.TransformPoint(_firePoint), currentDirection, _rayCastDistance);
+                RaycastHit2D sightCheck = Physics2D.Raycast(transform.TransformPoint(_firePoint), currentDirection, _rayCastDistance, _targetLayers);
                 if (sightCheck.transform == hit.transform) {
                     _target = hit.transform;
                     _currentState = _states.tracking; //switch to tracking state when we hit something
@@ -88,12 +88,17 @@ public class PlayerGunTargetScanner : MonoBehaviour
 
     private void TrackTarget()
     {
+        //if target is destroyed
+        if (_target == null)
+        {
+            _currentState = _states.scanning;
+            return;
+        }
         //track to see if _target is in line of sight and in given angle constraint
         //otherwise switch back to scanning state
         Vector2 direction = _target.position - transform.TransformPoint(_firePoint);
         //need to check here if it's between the constraints
         float directionEuler = Degrees.Normalizeto360(Degrees.Vec2toDeg(direction) + 90);
-        Debug.Log(directionEuler + " " + _startAngle + " " + _endAngle);
         bool directionIsInConstraint = Degrees.RotationIsBetween(directionEuler, Degrees.Normalizeto360(_startAngle), Degrees.Normalizeto360(_endAngle));
         RaycastHit2D hit = Physics2D.Raycast(transform.TransformPoint(_firePoint), direction, _rayCastDistance);
         if (hit.transform != _target || !directionIsInConstraint) //if not in line of sight or in constraint angles
