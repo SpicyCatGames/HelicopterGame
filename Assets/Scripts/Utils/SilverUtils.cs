@@ -110,10 +110,40 @@ namespace SilverUtils.Angle
 
 namespace SilverUtils
 {
-    public static class Misc{
+    public static class Misc
+    {
+        /// <summary>
+        /// Orthographic only
+        /// </summary>
         public static float GetPPU(Camera cam)
         {
             return (Screen.height / 2) / cam.orthographicSize;
+        }
+    }
+}
+
+namespace SilverUtils
+{        /// <summary>
+         /// Everything here is untested
+         /// </summary>
+    public static class Maths
+    {
+        /// <summary>
+        /// Returns true if the difference between a and b is less than EPSILON
+        /// </summary>
+        public static bool NearlyEqual(float a, float b, float EPSILON)
+        {
+            return Mathf.Abs(a - b) < EPSILON;
+        }
+
+        public static float ScaleFromZeroTo(float number, float from, float to)
+        {
+            return number * (to / from);
+        }
+
+        public static float ScaleFromTo(float number, float fromMin, float fromMax, float toMin, float toMax)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
