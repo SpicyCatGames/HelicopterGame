@@ -64,7 +64,20 @@ namespace customInputs
             if (_touchInput == null) return;
             Horizontal = _touchInput.ButtonInputValues.x;
             Vertical = _touchInput.ButtonInputValues.y;
-            //fire/"jump" button still needs to be implemented, but let's do that here and keep TouchInput class strictly for touch joystick
+
+            //fire/"SpaceKey" button, let's do that here and keep TouchInput class strictly for touch joystick
+            SpaceKey = false;//resetting it before checking for input
+            for (int x = 0; x < Input.touchCount; x++)
+            {
+                Touch touch = Input.GetTouch(x);
+                if (!_touchInput.Controlling || touch.fingerId != _touchInput.controlFingerID) //making sure we do not use the controlling finger for jump
+                {
+                    if (touch.position.x < Screen.width/2)
+                    {
+                        SpaceKey = true;
+                    }
+                }
+            }
         }
     }
 }

@@ -40,6 +40,7 @@ public class TouchInput : MonoBehaviour
         PointerPosition = originScreen;
         PixelDelta = default;
         UnitDelta = default;
+        ButtonInputValues = default;
     }
 
     private void ProcessTouch()
@@ -62,17 +63,17 @@ public class TouchInput : MonoBehaviour
 
             #region Debug
             #if UNITY_EDITOR
-                Debug.DrawLine(cam.ScreenToWorldPoint(new Vector3(originScreen.x - radiusInPixels, originScreen.y, 10)), cam.ScreenToWorldPoint(new Vector3(originScreen.x + radiusInPixels, originScreen.y, 10)), Color.red, 2, false);
-                Debug.DrawLine(cam.ScreenToWorldPoint(new Vector3(originScreen.x - radiusInPixels, originScreen.y - radiusInPixels, 10)), cam.ScreenToWorldPoint(new Vector3(originScreen.x + radiusInPixels, originScreen.y - radiusInPixels, 10)), Color.red, 2, false);
-                Debug.DrawLine(cam.ScreenToWorldPoint(new Vector3(originScreen.x - radiusInPixels, originScreen.y + radiusInPixels, 10)), cam.ScreenToWorldPoint(new Vector3(originScreen.x + radiusInPixels, originScreen.y + radiusInPixels, 10)), Color.red, 2, false);
-                Debug.DrawLine(cam.ScreenToWorldPoint(new Vector3(originScreen.x, originScreen.y - radiusInPixels, 10)), cam.ScreenToWorldPoint(new Vector3(originScreen.x, originScreen.y + radiusInPixels, 10)), Color.red, 2, false);
-                Debug.DrawLine(cam.ScreenToWorldPoint(new Vector3(originScreen.x - radiusInPixels, originScreen.y - radiusInPixels, 10)), cam.ScreenToWorldPoint(new Vector3(originScreen.x - radiusInPixels, originScreen.y + radiusInPixels, 10)), Color.red, 2, false);
-                Debug.DrawLine(cam.ScreenToWorldPoint(new Vector3(originScreen.x + radiusInPixels, originScreen.y - radiusInPixels, 10)), cam.ScreenToWorldPoint(new Vector3(originScreen.x + radiusInPixels, originScreen.y + radiusInPixels, 10)), Color.red, 2, false);
+                Debug.DrawLine(cam.ScreenToWorldPoint(new Vector3(originScreen.x - radiusInPixels, originScreen.y, 10)), cam.ScreenToWorldPoint(new Vector3(originScreen.x + radiusInPixels, originScreen.y, 10)), Color.red, 0, false);
+                Debug.DrawLine(cam.ScreenToWorldPoint(new Vector3(originScreen.x - radiusInPixels, originScreen.y - radiusInPixels, 10)), cam.ScreenToWorldPoint(new Vector3(originScreen.x + radiusInPixels, originScreen.y - radiusInPixels, 10)), Color.red, 0, false);
+                Debug.DrawLine(cam.ScreenToWorldPoint(new Vector3(originScreen.x - radiusInPixels, originScreen.y + radiusInPixels, 10)), cam.ScreenToWorldPoint(new Vector3(originScreen.x + radiusInPixels, originScreen.y + radiusInPixels, 10)), Color.red, 0, false);
+                Debug.DrawLine(cam.ScreenToWorldPoint(new Vector3(originScreen.x, originScreen.y - radiusInPixels, 10)), cam.ScreenToWorldPoint(new Vector3(originScreen.x, originScreen.y + radiusInPixels, 10)), Color.red, 0, false);
+                Debug.DrawLine(cam.ScreenToWorldPoint(new Vector3(originScreen.x - radiusInPixels, originScreen.y - radiusInPixels, 10)), cam.ScreenToWorldPoint(new Vector3(originScreen.x - radiusInPixels, originScreen.y + radiusInPixels, 10)), Color.red, 0, false);
+                Debug.DrawLine(cam.ScreenToWorldPoint(new Vector3(originScreen.x + radiusInPixels, originScreen.y - radiusInPixels, 10)), cam.ScreenToWorldPoint(new Vector3(originScreen.x + radiusInPixels, originScreen.y + radiusInPixels, 10)), Color.red, 0, false);
                 //deadzone lines
-                Debug.DrawLine(cam.ScreenToWorldPoint(new Vector3(originScreen.x - radiusInPixels, originScreen.y - (radiusInPixels * _buttonLowerDeadZone), 10)), cam.ScreenToWorldPoint(new Vector3(originScreen.x + radiusInPixels, originScreen.y - (radiusInPixels * _buttonLowerDeadZone), 10)), Color.red, 2, false);
-                Debug.DrawLine(cam.ScreenToWorldPoint(new Vector3(originScreen.x - radiusInPixels, originScreen.y + (radiusInPixels * _buttonLowerDeadZone), 10)), cam.ScreenToWorldPoint(new Vector3(originScreen.x + radiusInPixels, originScreen.y + (radiusInPixels * _buttonLowerDeadZone), 10)), Color.red, 2, false);
-                Debug.DrawLine(cam.ScreenToWorldPoint(new Vector3(originScreen.x - (radiusInPixels * _buttonLowerDeadZone), originScreen.y - radiusInPixels, 10)), cam.ScreenToWorldPoint(new Vector3(originScreen.x - (radiusInPixels * _buttonLowerDeadZone), originScreen.y + radiusInPixels, 10)), Color.red, 2, false);
-                Debug.DrawLine(cam.ScreenToWorldPoint(new Vector3(originScreen.x + (radiusInPixels * _buttonLowerDeadZone), originScreen.y - radiusInPixels, 10)), cam.ScreenToWorldPoint(new Vector3(originScreen.x + (radiusInPixels * _buttonLowerDeadZone), originScreen.y + radiusInPixels, 10)), Color.red, 2, false);
+                Debug.DrawLine(cam.ScreenToWorldPoint(new Vector3(originScreen.x - radiusInPixels, originScreen.y - (radiusInPixels * _buttonLowerDeadZone), 10)), cam.ScreenToWorldPoint(new Vector3(originScreen.x + radiusInPixels, originScreen.y - (radiusInPixels * _buttonLowerDeadZone), 10)), Color.red, 0, false);
+                Debug.DrawLine(cam.ScreenToWorldPoint(new Vector3(originScreen.x - radiusInPixels, originScreen.y + (radiusInPixels * _buttonLowerDeadZone), 10)), cam.ScreenToWorldPoint(new Vector3(originScreen.x + radiusInPixels, originScreen.y + (radiusInPixels * _buttonLowerDeadZone), 10)), Color.red, 0, false);
+                Debug.DrawLine(cam.ScreenToWorldPoint(new Vector3(originScreen.x - (radiusInPixels * _buttonLowerDeadZone), originScreen.y - radiusInPixels, 10)), cam.ScreenToWorldPoint(new Vector3(originScreen.x - (radiusInPixels * _buttonLowerDeadZone), originScreen.y + radiusInPixels, 10)), Color.red, 0, false);
+                Debug.DrawLine(cam.ScreenToWorldPoint(new Vector3(originScreen.x + (radiusInPixels * _buttonLowerDeadZone), originScreen.y - radiusInPixels, 10)), cam.ScreenToWorldPoint(new Vector3(originScreen.x + (radiusInPixels * _buttonLowerDeadZone), originScreen.y + radiusInPixels, 10)), Color.red, 0, false);
             #endif
             #endregion
             if (touch.fingerId == controlFingerID && Controlling)
@@ -87,7 +88,6 @@ public class TouchInput : MonoBehaviour
                 int inputX = (Mathf.Abs(InputValues.x) < _buttonLowerDeadZone) ? 0 : 1 * (int)Mathf.Sign(InputValues.x);
                 int inputY = (Mathf.Abs(InputValues.y) < _buttonLowerDeadZone) ? 0 : 1 * (int)Mathf.Sign(InputValues.y);
                 ButtonInputValues = new Vector2Int(inputX, inputY);
-                Debug.Log(ButtonInputValues);
 
                 PointerPosition = originScreen + InputValues * radiusInPixels;
 
