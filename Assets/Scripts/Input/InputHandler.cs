@@ -72,7 +72,7 @@ namespace customInputs
                 Touch touch = Input.GetTouch(x);
                 if (!_touchInput.Controlling || touch.fingerId != _touchInput.controlFingerID) //making sure we do not use the controlling finger for jump
                 {
-                    if (touch.position.x < Screen.width/2)
+                    if (touch.position.x > Screen.width/2)
                     {
                         SpaceKey = true;
                     }
