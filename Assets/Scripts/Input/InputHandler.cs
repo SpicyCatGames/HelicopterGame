@@ -32,23 +32,23 @@ namespace customInputs
 
         void Update()
         {
-#if UNITY_STANDALONE && !UNITY_EDITOR
+            #if UNITY_STANDALONE && !UNITY_EDITOR
                 KeyboardInput();
-#endif
-#if UNITY_ANDROID && !UNITY_EDITOR
-            TouchInput();
-#endif
-            #region Editor only
-#if UNITY_EDITOR
-            if (_editorInputMethod == EditorInputMethod.Keyboard)
-            {
-                KeyboardInput();
-            }
-            else if (_editorInputMethod == EditorInputMethod.Touch)
-            {
+            #endif
+            #if UNITY_ANDROID && !UNITY_EDITOR
                 TouchInput();
-            }
-#endif
+            #endif
+            #region Editor only
+            #if UNITY_EDITOR
+                if (_editorInputMethod == EditorInputMethod.Keyboard)
+                {
+                    KeyboardInput();
+                }
+                else if (_editorInputMethod == EditorInputMethod.Touch)
+                {
+                    TouchInput();
+                }
+            #endif
             #endregion
         }
 

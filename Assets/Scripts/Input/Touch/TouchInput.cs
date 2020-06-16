@@ -19,6 +19,13 @@ public class TouchInput : MonoBehaviour
     public Vector2 PixelDelta { get; private set; } = default;
     public Vector2 UnitDelta { get; private set; } = default;
 
+    #region Debug
+    #if UNITY_EDITOR
+    [Header("This should be disabled before play mode to avoid issues")]
+    [SerializeField] private bool GizmosEnabledInSceneView = false;
+    #endif
+    #endregion
+
     private void Start()
     {
         cam = Camera.main;
@@ -99,4 +106,31 @@ public class TouchInput : MonoBehaviour
             }
         }
     }
+
+    #region Debug
+    #if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        if (!GizmosEnabledInSceneView)
+        {
+            return;
+        }
+        cam = Camera.main;
+        originScreen = cam.ViewportToScreenPoint(_originViewport);
+        float radiusInPixels = Screen.height * _sizeFromHeight / 2;
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(cam.ScreenToWorldPoint(new Vector3(originScreen.x - radiusInPixels, originScreen.y, 10)), cam.ScreenToWorldPoint(new Vector3(originScreen.x + radiusInPixels, originScreen.y, 10)));
+        Gizmos.DrawLine(cam.ScreenToWorldPoint(new Vector3(originScreen.x - radiusInPixels, originScreen.y - radiusInPixels, 10)), cam.ScreenToWorldPoint(new Vector3(originScreen.x + radiusInPixels, originScreen.y - radiusInPixels, 10)));
+        Gizmos.DrawLine(cam.ScreenToWorldPoint(new Vector3(originScreen.x - radiusInPixels, originScreen.y + radiusInPixels, 10)), cam.ScreenToWorldPoint(new Vector3(originScreen.x + radiusInPixels, originScreen.y + radiusInPixels, 10)));
+        Gizmos.DrawLine(cam.ScreenToWorldPoint(new Vector3(originScreen.x, originScreen.y - radiusInPixels, 10)), cam.ScreenToWorldPoint(new Vector3(originScreen.x, originScreen.y + radiusInPixels, 10)));
+        Gizmos.DrawLine(cam.ScreenToWorldPoint(new Vector3(originScreen.x - radiusInPixels, originScreen.y - radiusInPixels, 10)), cam.ScreenToWorldPoint(new Vector3(originScreen.x - radiusInPixels, originScreen.y + radiusInPixels, 10)));
+        Gizmos.DrawLine(cam.ScreenToWorldPoint(new Vector3(originScreen.x + radiusInPixels, originScreen.y - radiusInPixels, 10)), cam.ScreenToWorldPoint(new Vector3(originScreen.x + radiusInPixels, originScreen.y + radiusInPixels, 10)));
+
+        Gizmos.DrawLine(cam.ScreenToWorldPoint(new Vector3(originScreen.x - radiusInPixels, originScreen.y - (radiusInPixels * _buttonLowerDeadZone), 10)), cam.ScreenToWorldPoint(new Vector3(originScreen.x + radiusInPixels, originScreen.y - (radiusInPixels * _buttonLowerDeadZone), 10)));
+        Gizmos.DrawLine(cam.ScreenToWorldPoint(new Vector3(originScreen.x - radiusInPixels, originScreen.y + (radiusInPixels * _buttonLowerDeadZone), 10)), cam.ScreenToWorldPoint(new Vector3(originScreen.x + radiusInPixels, originScreen.y + (radiusInPixels * _buttonLowerDeadZone), 10)));
+        Gizmos.DrawLine(cam.ScreenToWorldPoint(new Vector3(originScreen.x - (radiusInPixels * _buttonLowerDeadZone), originScreen.y - radiusInPixels, 10)), cam.ScreenToWorldPoint(new Vector3(originScreen.x - (radiusInPixels * _buttonLowerDeadZone), originScreen.y + radiusInPixels, 10)));
+        Gizmos.DrawLine(cam.ScreenToWorldPoint(new Vector3(originScreen.x + (radiusInPixels * _buttonLowerDeadZone), originScreen.y - radiusInPixels, 10)), cam.ScreenToWorldPoint(new Vector3(originScreen.x + (radiusInPixels * _buttonLowerDeadZone), originScreen.y + radiusInPixels, 10)));
+    }
+    #endif
+    #endregion
 }
