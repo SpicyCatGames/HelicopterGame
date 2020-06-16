@@ -3,7 +3,17 @@ guid: 6a3f14d6d14e60d41b2c8572ac002e1c
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - Idle: {fileID: 21300000, guid: 7d04b56e567661c4a8b4a50071746530, type: 3}
+  - Up: {fileID: 21300000, guid: d2cbbe8f3dbbe9941a56d11a457d4add, type: 3}
+  - Down: {fileID: 21300000, guid: b69b224d5e3a34645936f1eda9652355, type: 3}
+  - Left: {fileID: 21300000, guid: 92eb7115d2f373d4aaca6c4ce9e9f201, type: 3}
+  - Right: {fileID: 21300000, guid: 7aa8f263d2525e446b25ac3dd3066726, type: 3}
+  - UpLeft: {fileID: 21300000, guid: 3c7caabac8d56a14aafcb19fa474e851, type: 3}
+  - UpRight: {fileID: 21300000, guid: fd39c3291efe8f84f8a75202598a576b, type: 3}
+  - DownLeft: {fileID: 21300000, guid: 397bda460c728a34aa6c0397c75e5e71, type: 3}
+  - DownRight: {fileID: 21300000, guid: 8830ff95f1b6ecd42968a662149a4b6c, type: 3}
+  - _touchInput: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

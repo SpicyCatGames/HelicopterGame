@@ -17,12 +17,14 @@ public class TouchUISpriteSelector : MonoBehaviour
 
     private Vector2Int _oldInputValues = default;
     private Sprite _currentSprite;
+    private SpriteRenderer _renderer = default;
 
     [SerializeField]private TouchInput _touchInput =  null;
 
     void Start()
 	{
         _currentSprite = Idle;
+        _renderer = GetComponent<SpriteRenderer>();
 	}
 
     void Update()
@@ -86,6 +88,6 @@ public class TouchUISpriteSelector : MonoBehaviour
     private void ApplySpritetoUI()
     {
         //this method will apply the new sprite to the UI
-        throw new System.NotImplementedException();
+        _renderer.sprite = _currentSprite;
     }
 }

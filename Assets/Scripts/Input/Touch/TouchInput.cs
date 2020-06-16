@@ -44,7 +44,7 @@ public class TouchInput : MonoBehaviour
     private void ResetProperties()
     {
         InputValues = default;
-        PointerPosition = originScreen;
+        PointerPosition = originScreen; //this is not calculated outside of play mode
         PixelDelta = default;
         UnitDelta = default;
         ButtonInputValues = default;
