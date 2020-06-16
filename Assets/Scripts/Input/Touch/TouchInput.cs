@@ -5,10 +5,10 @@ using UnityEngine;
 public class TouchInput : MonoBehaviour
 {
     Camera cam;
-
+    [Header("Keep _sizeFromHeight 0 - 1")]
     public Vector2 _originViewport = new Vector2(.5f, .5f);
     private Vector2 originScreen = default;
-    [SerializeField][Range(0, 1)] private float _sizeFromHeight = .3f;
+    [field: SerializeField] public float _sizeFromHeight { get; private set; } = .3f;
     [SerializeField][Range(0, 1)] private float _buttonLowerDeadZone = .333f;
     
     public bool Controlling { get; private set; } = false;

@@ -13,6 +13,7 @@ public class ControllerUIPlacement : MonoBehaviour
 	void Start()
 	{
         cam = Camera.main;
+        CalculateScale();
 	}
 
 	void Update()
@@ -21,4 +22,15 @@ public class ControllerUIPlacement : MonoBehaviour
         Vector2 controllerWorldPos = cam.ViewportToWorldPoint(_touchInput._originViewport);
         transform.position = new Vector3(controllerWorldPos.x, controllerWorldPos.y, _zPosition);
 	}
+
+    private void CalculateScale()
+    {
+        float height = GetComponent<SpriteRenderer>().sprite.texture.height;
+        float ppu = GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
+        float sizeFromHeightWorld = height / ppu;//this is assuming scale is 1, just in case I decide to use this formula later, here it works at any starting scale
+        float displayPixels = sizeFromHeightWorld * SilverUtils.Misc.GetPPU(cam);
+        float targetHeight = _touchInput._sizeFromHeight * Screen.height;
+        scale = targetHeight / displayPixels;
+        transform.localScale = new Vector3(scale, scale, transform.localScale.z);
+    }
 }
