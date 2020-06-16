@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,22 +12,44 @@ namespace customInputs
         public static float Vertical { get; private set; }
         public static bool SpaceKey { get; private set; }
 
-        #region TouchInput fields
-        private Vector2[] _startTouchPosition = new Vector2[2];
-        [SerializeField] [Range(0, 1)] private float radiusSizeMultiplier = 1; //how much of the display height to be used as ui joystick radius
-        private LineRenderer _lr;
+        #region TouchInput() fields
+        private TouchInput _touchInput;
+        #endregion
+
+        #region Editor only
+#if UNITY_EDITOR
+        enum EditorInputMethod {
+            Keyboard, Touch
+        }
+        [SerializeField] private EditorInputMethod _editorInputMethod = EditorInputMethod.Keyboard;
+#endif
         #endregion
 
         private void Start()
         {
-            _lr = GetComponent<LineRenderer>();
+            _touchInput = GetComponent<TouchInput>();
         }
 
         void Update()
         {
-            KeyboardInput();
-            //MouseInput(); This is just an easy way to debug touch
-            TouchInput();
+            #if UNITY_STANDALONE && !UNITY_EDITOR
+                KeyboardInput();
+            #endif
+            #if UNITY_ANDROID && !UNITY_EDITOR
+                TouchInput();
+            #endif
+            #region Editor only
+            #if UNITY_EDITOR
+                if (_editorInputMethod == EditorInputMethod.Keyboard)
+                {
+                    KeyboardInput();
+                }
+                else if (_editorInputMethod == EditorInputMethod.Touch)
+                {
+                    TouchInput();
+                }
+            #endif
+            #endregion
         }
 
         void KeyboardInput()
@@ -38,58 +61,22 @@ namespace customInputs
 
         void TouchInput()
         {
-            if (Input.touchCount > 0)
-            {
-                int activeTouches = (Input.touchCount < 2) ? Input.touchCount : 2; //same as touchcount but no more than 2
-                for (int x = 0; x < activeTouches; x++)
-                {
-                    if(Input.GetTouch(x).phase == TouchPhase.Began)
-                    {
-                        _startTouchPosition[x] = Input.GetTouch(x).position;
-                    }
-                }
+            if (_touchInput == null) return;
+            Horizontal = _touchInput.ButtonInputValues.x;
+            Vertical = _touchInput.ButtonInputValues.y;
 
-                SpaceKey = false;
-                for (int x = 0; x < activeTouches; x++)
+            //fire/"SpaceKey" button, let's do that here and keep TouchInput class strictly for touch joystick
+            SpaceKey = false;//resetting it before checking for input
+            for (int x = 0; x < Input.touchCount; x++)
+            {
+                Touch touch = Input.GetTouch(x);
+                if (!_touchInput.Controlling || touch.fingerId != _touchInput.controlFingerID) //making sure we do not use the controlling finger for jump
                 {
-                    //if touching on left half of screen
-                    if(Input.GetTouch(x).position.x <= Screen.width / 2)
-                    {
-                        TouchControlProcessor(Input.GetTouch(x), _startTouchPosition[x]);
-                    }
-                    else
+                    if (touch.position.x > Screen.width/2)
                     {
                         SpaceKey = true;
                     }
                 }
-            }
-        }
-
-        void TouchControlProcessor(Touch touch, Vector2 startTouchPosition)
-        {
-            float scalingDivisor = Screen.height * radiusSizeMultiplier;
-            switch (touch.phase)
-            {
-                case TouchPhase.Moved:
-                case TouchPhase.Stationary:
-                    float horizontalUnscaled = touch.position.x - startTouchPosition.x;
-                    float horizontalScaled = horizontalUnscaled / scalingDivisor;
-                    Horizontal = (horizontalScaled < 1) ? horizontalScaled : 1;
-
-                    float verticalUnscaled = touch.position.y - startTouchPosition.y;
-                    float verticalScaled = verticalUnscaled / scalingDivisor;
-                    Vertical = (verticalScaled < 1) ? verticalScaled : 1;
-
-                    _lr.enabled = true;
-                    _lr.SetPosition(0, Camera.main.ScreenToWorldPoint(new Vector3(startTouchPosition.x, startTouchPosition.y, 1)));
-                    _lr.SetPosition(1, Camera.main.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 1)));
-                    break;
-
-                case TouchPhase.Ended:
-                    Horizontal = 0;
-                    Vertical = 0;
-                    _lr.enabled = false;
-                    break;
             }
         }
     }

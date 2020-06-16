@@ -53,10 +53,21 @@ public class PlayerGun : MonoBehaviour
 
     private void Fire()
     {
-        if (_target == null)
+        //if fire button isn't pressed
+        if (customInputs.InputHandler.SpaceKey == false)
         {
+            //this is so that delay isn't set to some number less and there is a delay in firing next time fire button is pressed
+            if (_fireCountDown < _fireDelay)
+            {
+                _fireCountDown += Time.deltaTime;
+            }
             return;
         }
+        // This is if you want to only fire when target is sighted
+        //if (_target == null)
+        //{
+        //    return;
+        //}
         _fireCountDown += Time.deltaTime;
         if (_fireCountDown > _fireDelay)
         {
