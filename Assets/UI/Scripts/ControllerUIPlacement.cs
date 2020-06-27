@@ -9,18 +9,23 @@ public class ControllerUIPlacement : MonoBehaviour
     [SerializeField] private TouchInput _touchInput = null;
     Camera cam;
     float scale;
+    float camStartSize;
+    private Vector3 startScale;
 
 	void Start()
 	{
         cam = Camera.main;
+        camStartSize = cam.orthographicSize;
         CalculateScale();
+        startScale = transform.localScale;
 	}
 
-	void Update()
+	void LateUpdate()
 	{
         //calculate this position here
         Vector2 controllerWorldPos = cam.ViewportToWorldPoint(_touchInput._originViewport);
         transform.position = new Vector3(controllerWorldPos.x, controllerWorldPos.y, _zPosition);
+        transform.localScale = startScale * (cam.orthographicSize / camStartSize);
 	}
 
     private void CalculateScale()
