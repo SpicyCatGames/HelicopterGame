@@ -1,4 +1,4 @@
-﻿//this script is for things that won't exist in play more or in build
+﻿//this script is for things that won't exist in play mode or in build
 #if UNITY_EDITOR
 using System.Collections;
 using System.Collections.Generic;
