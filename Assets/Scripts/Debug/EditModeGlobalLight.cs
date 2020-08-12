@@ -1,5 +1,4 @@
 ﻿//this script is for things that won't exist in play mode or in build
-#if UNITY_EDITOR
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +13,7 @@ public class EditModeGlobalLight : MonoBehaviour
 
     private void Update()
     {
+        #if UNITY_EDITOR
         if (EditorApplication.isPlayingOrWillChangePlaymode)
         {
             EditModeLight2D.enabled = false;
@@ -24,6 +24,9 @@ public class EditModeGlobalLight : MonoBehaviour
             InGameLight2D.enabled = false;
             EditModeLight2D.enabled = true;
         }
+        #endif
+        #if !UNITY_EDITOR
+        Destroy(this.gameObject);
+        #endif
     }
 }
-#endif
