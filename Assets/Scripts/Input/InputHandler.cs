@@ -35,12 +35,15 @@ namespace customInputs
             #if UNITY_STANDALONE && !UNITY_EDITOR
                 KeyboardInput();
             #endif
+            #if UNITY_WEBGL && !UNITY_EDITOR
+                KeyboardInput();
+            #endif
             #if UNITY_ANDROID && !UNITY_EDITOR
                 TouchInput();
             #endif
             #region Editor only
-            #if UNITY_EDITOR
-                if (_editorInputMethod == EditorInputMethod.Keyboard)
+#if UNITY_EDITOR
+            if (_editorInputMethod == EditorInputMethod.Keyboard)
                 {
                     KeyboardInput();
                 }
