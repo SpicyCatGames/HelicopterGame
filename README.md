@@ -1,6 +1,6 @@
 # HelicopterGame
  
-Free assets used:</br>
+assets used:</br>
 https://webstockreview.net/image/fireball-clipart-sprite/2700530.html</br>
 https://opengameart.org/content/tileset-and-assets-for-a-scorched-earth-type-game</br>
 https://mobilegamegraphics.itch.io/war-game-kit</br>
